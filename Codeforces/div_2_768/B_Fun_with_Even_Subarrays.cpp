@@ -5,49 +5,48 @@ using namespace std;
 #define int long long int
 #define mod 1000000007
 
-bool good(int arr[], int n)
-{
-    for (int i = 1; i < n + 1; i++)
-    {
-        if (arr[i] != arr[i + 1])
-        {
-            return false;
-        }
-    }
+// bool good(int arr[], int n)
+// {
+//     for (int i = 1; i < n + 1; i++)
+//     {
+//         if (arr[i] != arr[i + 1])
+//         {
+//             return false;
+//         }
+//     }
 
-    return true;
+//     return true;
+// }
+
+void change(int arr[], int k, int l)
+{
+    for (int i = 0; i < k; i++)
+    {
+        arr[l - i] = arr[l + k - i];
+    }
 }
+
+// 0 4 2 3 3
 
 int solve(int arr[], int n)
 {
-    if (n == 1)
+    int last = arr[n];
+
+    int count = 0;
+
+    for (int i = n - 1; i >= 1; i--)
     {
-        return 0;
-    }
-
-    if (good(arr, n))
-        return 0;
-
-    int ans1, ans2;
-
-    if (arr[n - 1] != arr[n])
-    {
-        int l = n - 1;
-        int k = n - l;
-        for (int i = 0; i < k; i++)
+        if (arr[i] != last)
         {
-            arr[l + i] = arr[l + k + i];
+            int l = i;
+            int k = (n - i);
+            change(arr, k, l);
+            count++;
+            i = l - k;
         }
-
-        ans1 = (k - 1) + solve(arr, n - 1);
     }
 
-    else
-    {
-        ans2 = solve(arr, n - 1);
-    }
-
-    return (ans1 + ans2);
+    return count;
 }
 
 int solve()
@@ -59,7 +58,7 @@ int solve()
 
     arr[0] = 0;
 
-    for (int i = 1; i < n; i++)
+    for (int i = 1; i < n+1; i++)
     {
         cin >> arr[i];
     }
@@ -76,7 +75,7 @@ int32_t main()
     cin >> t;
     while (t--)
     {
-        cout<<solve()<<endl;
+        cout << solve() << endl;
     }
     return 0;
 }
