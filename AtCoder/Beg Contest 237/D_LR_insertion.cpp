@@ -5,86 +5,85 @@ using namespace std;
 #define int long long int
 #define mod 1000000007
 
-int search(vector<int> &v, int k)
+class List
 {
-    int n = v.size();
+public:
+    int val;
+    List *next;
 
-    int ans = 0;
+    List(int d)
+    {
+        val = d;
+        next = NULL;
+    }
+};
+
+void solve(List *head, string s, int n)
+{
+    List *temp = head;
+    List *prev = head;
+
+    cout << prev->val << " " << prev->next << endl;
+    List *new_node = new List(2);
+    List *ne = new List(3);
+
+    new_node->next = ne;
+
+    temp->next = new_node;
+
+    // cout << temp->val << " -> " << temp->next->val << endl;
+
+    while(temp!=NULL){
+        cout<<temp->val<<"->";
+        temp=temp->next;
+    }
 
     for (int i = 0; i < n; i++)
     {
-        if (v[i] == k)
-            ans = i;
+        List *new_node = new List(i + 1);
+        // cout << new_node->val << " -> " << new_node->next << " == head -> " << head->val << endl;
+        if (s[i] == 'L')
+        {
+            new_node->next = temp;
+            if (temp != prev)
+                prev->next = new_node;
+            prev = temp;
+            temp = new_node;
+        }
+
+        else
+        {
+            new_node->next = temp->next;
+            temp->next = new_node;
+            prev = temp;
+            temp = new_node;
+        }
+
+        // cout << temp->val << " ";
     }
-
-    return ans;
-}
-
-void shiftL(vector<int> &v, int from)
-{
-    int n = v.size();
-
-    for (int i = n-1; i >=from; i--)
-    {
-        v[i] = v[i-1];
-    }
-}
-
-void shiftR(vector<int> &v, int from)
-{
-    int n = v.size();
-
-    for (int i = from + 1; i < n - 1; i++)
-    {
-        v[i + 1] = v[i];
-    }
-}
-
-void left(vector<int> &v, int ele, int ref)
-{
-
-    int refIdx = search(v, ref);
-
-    shiftL(v, refIdx);
-    v[refIdx] = ele;
-}
-
-void right(vector<int> &v, int ele, int ref)
-{
-
-    int refIdx = search(v, ref);
-
-    shiftR(v, refIdx);
-    v[refIdx + 1] = ele;
 }
 
 void solve()
 {
+
     int n;
     cin >> n;
 
     string s;
     cin >> s;
 
-    vector<int> arr(n + 1,0);
+    List *head = new List(0);
 
-    // arr[0] = 0;
+    // cout << head->val << " - " << head->next << endl;
 
-    for (int i = 1; i < n + 1; i++)
-    {
-        if (s[i - 1] == 'L')
-        {
-            left(arr, i, i - 1);
-        }
-        else
-        {
-            right(arr, i, i - 1);
-        }
-    }
+    solve(head, s, n);
 
-    for (auto i : arr)
-        cout << i << " ";
-    cout << endl;
+    // cout<<"Hello"<<endl;
+
+    // while(head!=NULL){
+    //     cout<<head->val<<" ";
+    //     head=head->next;
+    // }
 }
 
 int32_t main()
