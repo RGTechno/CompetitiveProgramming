@@ -67,13 +67,13 @@ int solve()
         // cout << i << " ";
         if (i != 0)
         {
-            ans *= i;
+            ans = (ans * i) % mod;
         }
     }
 
     // cout << endl;
 
-    return ans % mod;
+    return ans;
 }
 
 int32_t main()
