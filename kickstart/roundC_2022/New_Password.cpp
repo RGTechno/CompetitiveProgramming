@@ -27,11 +27,6 @@ string solve()
             spec = true;
     }
 
-    if (num and ualpha and lalpha and spec)
-    {
-        return s;
-    }
-
     if (!ualpha)
         s.push_back('A');
     if (!lalpha)
