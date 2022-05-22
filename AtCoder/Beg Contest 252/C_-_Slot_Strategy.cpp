@@ -24,38 +24,41 @@ void solve()
 
     vector<string> v;
 
+    map<int, vector<int>> mp;
+
     for (int i = 0; i < n; i++)
     {
         string str;
         cin >> str;
 
         v.push_back(str);
-
-        // fill(pref, s);
     }
 
-    for (char i = '0'; i <= '9'; i++)
+    for (auto &s : v)
     {
-        int prev = -1;
-        for (auto &s : v)
+        for (int i = 0; i < 10; i++)
         {
-            for (int k = 0; k < 10; k++)
+            mp[s[i] - '0'].push_back(i);
+        }
+    }
+
+    for (auto &i : mp)
+    {
+        sort(i.second.begin(), i.second.end());
+        int mx = i.second[0];
+        for (int j = 1; j < n; j++)
+        {
+            if (i.second[j] == i.second[j - 1])
             {
-                if (s[k] == i)
-                {
-                    if (prev == k)
-                    {
-                        pref[i-'0'] += 10;
-                    }
-                    else
-                    {
-                        prev = max(prev, k);
-                        pref[i-'0'] = max(pref[i-'0'], prev);
-                    }
-                    break;
-                }
+                mx = max(mx + 10, i.second[j]);
+            }
+            else
+            {
+                mx = max(mx, i.second[j]);
             }
         }
+
+        pref[i.first] = mx;
     }
 
     int mn = INT_MAX;
