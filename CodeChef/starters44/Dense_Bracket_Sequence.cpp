@@ -40,8 +40,8 @@ void solve()
         else if (s[l] == ')' and s[r] == '(')
         {
             count += 2;
-            l++;
             r--;
+            l++;
         }
     }
 
